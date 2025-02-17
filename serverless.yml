@@ -8,7 +8,7 @@ provider:
  runtime: nodejs18.x
 
 functions:
- main:
+ api:
    handler: dist/lambda.handler
    events:
      - http:
