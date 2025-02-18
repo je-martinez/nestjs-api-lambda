@@ -9,29 +9,29 @@ export class FakeCdkProjectStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const signingProfile = new signer.SigningProfile(this, 'SigningProfile', {
-      platform: signer.Platform.AWS_LAMBDA_SHA384_ECDSA,
-    });
+    // const signingProfile = new signer.SigningProfile(this, 'SigningProfile', {
+    //   platform: signer.Platform.AWS_LAMBDA_SHA384_ECDSA,
+    // });
 
-    const codeSigningConfig = new lambda.CodeSigningConfig(
-      this,
-      'CodeSigningConfig',
-      {
-        signingProfiles: [signingProfile],
-      },
-    );
+    // const codeSigningConfig = new lambda.CodeSigningConfig(
+    //   this,
+    //   'CodeSigningConfig',
+    //   {
+    //     signingProfiles: [signingProfile],
+    //   },
+    // );
 
     const apiNestHandlerFunction = new lambda.Function(this, 'NestJsLambda', {
-      codeSigningConfig,
+      // codeSigningConfig,
       runtime: lambda.Runtime.NODEJS_20_X,
-      handler: 'lambda.handler',
+      handler: 'main.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../../dist')),
     });
 
     const api = new restApi.RestApi(this, 'NestJsLambdaApi', {
       deploy: true,
       defaultMethodOptions: {
-        apiKeyRequired: true,
+        apiKeyRequired: false,
       },
     });
 
@@ -43,16 +43,17 @@ export class FakeCdkProjectStack extends Stack {
         },
       ),
     });
-    const apiKey = api.addApiKey('ApiKey');
-    const usagePlan = api.addUsagePlan('UsagePlan', {
-      name: 'UsagePlan',
-      apiStages: [
-        {
-          api,
-          stage: api.deploymentStage,
-        },
-      ],
-    });
-    usagePlan.addApiKey(apiKey);
+
+    // const apiKey = api.addApiKey('ApiKey');
+    // const usagePlan = api.addUsagePlan('UsagePlan', {
+    //   name: 'UsagePlan',
+    //   apiStages: [
+    //     {
+    //       api,
+    //       stage: api.deploymentStage,
+    //     },
+    //   ],
+    // });
+    // usagePlan.addApiKey(apiKey);
   }
 }

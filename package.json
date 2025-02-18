@@ -8,6 +8,7 @@
   "scripts": {
     "build": "nest build",
     "build:lambda": "nest build --webpack --webpackPath webpack.config.js",
+    "build:lambda:aws": "nest build --webpack --webpackPath webpack.aws.config.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -27,7 +28,9 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
+    "@vendia/serverless-express": "^4.12.6",
     "aws-lambda": "^1.0.7",
+    "express": "^4.21.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "webpack": "^5.98.0",
