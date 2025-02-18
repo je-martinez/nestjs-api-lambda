@@ -8,7 +8,6 @@
   "scripts": {
     "build": "nest build",
     "build:lambda": "nest build --webpack --webpackPath webpack.config.js",
-    "build:lambda:aws": "nest build --webpack --webpackPath webpack.aws.config.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
