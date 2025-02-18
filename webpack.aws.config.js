@@ -6,7 +6,19 @@ module.exports = function (options, webpack) {
   return {
     ...options,
     entry: ['./src/lambda.ts'],
-    externals: [],
+    externals: [
+      ({ request }, callback) => {
+        // Exclude non-essential modules
+        if (lazyImports.includes(request)) {
+          return callback(null, `commonjs ${request}`);
+        }
+        // Exclude Cursor & IDE-specific extensions
+        if (request.includes('.cursor/extensions/')) {
+          return callback(null, `commonjs ${request}`);
+        }
+        callback();
+      },
+    ],
     output: {
       ...options.output,
       libraryTarget: 'commonjs2',
